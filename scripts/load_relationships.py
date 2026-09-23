@@ -14,6 +14,7 @@ duplicates or crashing on already-loaded tables.
 """
 
 import csv
+import unicodedata
 from pathlib import Path
 
 import mysql.connector
@@ -51,6 +52,29 @@ JUNCTION_TABLES = [
 ]
 
 
+def normalize_name(value):
+    """Match MySQL's case/accent-insensitive lookup behavior in Python."""
+    value = value.translate(str.maketrans({
+        "Æ": "AE",
+        "æ": "ae",
+        "Ł": "L",
+        "ł": "l",
+        "Ø": "O",
+        "ø": "o",
+        "Đ": "D",
+        "đ": "d",
+        "ß": "ss",
+    }))
+    value = unicodedata.normalize("NFKD", value.strip())
+    value = "".join(
+        char
+        for char in value
+        if not unicodedata.combining(char)
+        and unicodedata.category(char) != "Cf"
+    )
+    return value.casefold()
+
+
 def table_count(cursor, table):
     cursor.execute(f"SELECT COUNT(*) FROM `{table}`")
     return cursor.fetchone()[0]
@@ -79,7 +103,7 @@ def load_lookup_table(cursor, connection, filename, table, id_col):
         print(f"  {table}: already has {existing:,} rows, skipping insert")
 
     cursor.execute(f"SELECT {id_col}, name FROM `{table}`")
-    return {name: id_ for id_, name in cursor.fetchall()}
+    return {normalize_name(name): id_ for id_, name in cursor.fetchall()}
 
 
 def load_junction(cursor, connection, filename, table, id_col, name_field, name_to_id, label):
@@ -98,7 +122,7 @@ def load_junction(cursor, connection, filename, table, id_col, name_field, name_
         for row in reader:
             app_id = row.get("app_id")
             name = (row.get(name_field) or "").strip()
-            id_ = name_to_id.get(name)
+            id_ = name_to_id.get(normalize_name(name)) if name else None
             if app_id and id_ is not None:
                 rows.append((app_id, id_))
             else:
@@ -126,7 +150,7 @@ def load_languages(cursor, connection, language_to_id):
             app_id = row.get("app_id")
             name = (row.get("language_name") or "").strip()
             support_type = (row.get("support_type") or "").strip()
-            id_ = language_to_id.get(name)
+            id_ = language_to_id.get(normalize_name(name)) if name else None
             if app_id and id_ is not None and support_type:
                 rows.append((app_id, id_, support_type))
             else:
