@@ -27,3 +27,8 @@ SteamScope/
 ├── data/
 ├── scripts/
 └── docs/
+```
+
+## Backend
+
+The working FastAPI backend and setup walkthrough are in [backend/README.md](backend/README.md).
