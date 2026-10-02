@@ -1,7 +1,14 @@
 # SteamScope frontend
 
-A React + Vite interface using the local FastAPI backend. The design uses a dark
-sidebar, mint accents, game artwork, and reusable cards across personal collections.
+A React + Vite interface using the local FastAPI backend. The design uses ink-purple
+backgrounds, acid-lime accents, lavender panels, oversized editorial typography,
+and real game artwork. The discovery screen combines a cinematic spotlight with
+a personalized recommendations panel. Shared cards carry the visual identity
+through collections, recommendations, rankings, and analytics.
+
+`src/styles.css` contains the base layout and components; `src/identity.css`
+defines the visual theme and responsive adjustments. Desktop (1440px) and phone
+(390px) layouts have been visually checked, including discovery and analytics.
 
 ## Run locally
 

@@ -1,0 +1,561 @@
+{
+  "catalog": {
+    "width": 1170,
+    "height": 810,
+    "nodes": [
+      {
+        "name": "game",
+        "x": 20,
+        "y": 270,
+        "width": 280,
+        "height": 90,
+        "fields": [
+          "PK: app_id",
+          "name"
+        ],
+        "count": 141899
+      },
+      {
+        "name": "game_screenshot",
+        "x": 20,
+        "y": 705,
+        "width": 280,
+        "height": 90,
+        "fields": [
+          "PK: screenshot_id",
+          "FK: app_id"
+        ],
+        "count": 1178381
+      },
+      {
+        "name": "review",
+        "x": 430,
+        "y": 705,
+        "width": 280,
+        "height": 90,
+        "fields": [
+          "PK: review_id",
+          "FK: app_id"
+        ],
+        "count": 0
+      },
+      {
+        "name": "game_developer",
+        "x": 430,
+        "y": 10,
+        "width": 280,
+        "height": 90,
+        "fields": [
+          "PK: app_id, developer_id",
+          "FK: developer_id, app_id"
+        ],
+        "count": 145841
+      },
+      {
+        "name": "developer",
+        "x": 860,
+        "y": 10,
+        "width": 280,
+        "height": 90,
+        "fields": [
+          "PK: developer_id",
+          "name"
+        ],
+        "count": 87692
+      },
+      {
+        "name": "game_publisher",
+        "x": 430,
+        "y": 105,
+        "width": 280,
+        "height": 90,
+        "fields": [
+          "PK: app_id, publisher_id",
+          "FK: app_id, publisher_id"
+        ],
+        "count": 138699
+      },
+      {
+        "name": "publisher",
+        "x": 860,
+        "y": 105,
+        "width": 280,
+        "height": 90,
+        "fields": [
+          "PK: publisher_id",
+          "name"
+        ],
+        "count": 73821
+      },
+      {
+        "name": "game_genre",
+        "x": 430,
+        "y": 200,
+        "width": 280,
+        "height": 90,
+        "fields": [
+          "PK: app_id, genre_id",
+          "FK: app_id, genre_id"
+        ],
+        "count": 384871
+      },
+      {
+        "name": "genre",
+        "x": 860,
+        "y": 200,
+        "width": 280,
+        "height": 90,
+        "fields": [
+          "PK: genre_id",
+          "name"
+        ],
+        "count": 33
+      },
+      {
+        "name": "game_tag",
+        "x": 430,
+        "y": 295,
+        "width": 280,
+        "height": 90,
+        "fields": [
+          "PK: app_id, tag_id",
+          "FK: app_id, tag_id"
+        ],
+        "count": 1180542
+      },
+      {
+        "name": "tag",
+        "x": 860,
+        "y": 295,
+        "width": 280,
+        "height": 90,
+        "fields": [
+          "PK: tag_id",
+          "name"
+        ],
+        "count": 452
+      },
+      {
+        "name": "game_category",
+        "x": 430,
+        "y": 390,
+        "width": 280,
+        "height": 90,
+        "fields": [
+          "PK: app_id, category_id",
+          "FK: category_id, app_id"
+        ],
+        "count": 632438
+      },
+      {
+        "name": "category",
+        "x": 860,
+        "y": 390,
+        "width": 280,
+        "height": 90,
+        "fields": [
+          "PK: category_id",
+          "name"
+        ],
+        "count": 65
+      },
+      {
+        "name": "game_platform",
+        "x": 430,
+        "y": 485,
+        "width": 280,
+        "height": 90,
+        "fields": [
+          "PK: app_id, platform_id",
+          "FK: app_id, platform_id"
+        ],
+        "count": 184107
+      },
+      {
+        "name": "platform",
+        "x": 860,
+        "y": 485,
+        "width": 280,
+        "height": 90,
+        "fields": [
+          "PK: platform_id",
+          "name"
+        ],
+        "count": 3
+      },
+      {
+        "name": "game_language",
+        "x": 430,
+        "y": 580,
+        "width": 280,
+        "height": 90,
+        "fields": [
+          "PK: app_id, language_id, support_type",
+          "FK: app_id, language_id"
+        ],
+        "count": 1020830
+      },
+      {
+        "name": "language",
+        "x": 860,
+        "y": 580,
+        "width": 280,
+        "height": 90,
+        "fields": [
+          "PK: language_id",
+          "name"
+        ],
+        "count": 129
+      }
+    ],
+    "edges": [
+      {
+        "child": "game_category",
+        "child_key": "category_id",
+        "parent": "category",
+        "parent_key": "category_id",
+        "name": "fk_game_category_category",
+        "delete_rule": "CASCADE",
+        "orphans": 0
+      },
+      {
+        "child": "game_category",
+        "child_key": "app_id",
+        "parent": "game",
+        "parent_key": "app_id",
+        "name": "fk_game_category_game",
+        "delete_rule": "CASCADE",
+        "orphans": 0
+      },
+      {
+        "child": "game_developer",
+        "child_key": "developer_id",
+        "parent": "developer",
+        "parent_key": "developer_id",
+        "name": "fk_game_developer_developer",
+        "delete_rule": "CASCADE",
+        "orphans": 0
+      },
+      {
+        "child": "game_developer",
+        "child_key": "app_id",
+        "parent": "game",
+        "parent_key": "app_id",
+        "name": "fk_game_developer_game",
+        "delete_rule": "CASCADE",
+        "orphans": 0
+      },
+      {
+        "child": "game_genre",
+        "child_key": "app_id",
+        "parent": "game",
+        "parent_key": "app_id",
+        "name": "fk_game_genre_game",
+        "delete_rule": "CASCADE",
+        "orphans": 0
+      },
+      {
+        "child": "game_genre",
+        "child_key": "genre_id",
+        "parent": "genre",
+        "parent_key": "genre_id",
+        "name": "fk_game_genre_genre",
+        "delete_rule": "CASCADE",
+        "orphans": 0
+      },
+      {
+        "child": "game_language",
+        "child_key": "app_id",
+        "parent": "game",
+        "parent_key": "app_id",
+        "name": "fk_game_language_game",
+        "delete_rule": "CASCADE",
+        "orphans": 0
+      },
+      {
+        "child": "game_language",
+        "child_key": "language_id",
+        "parent": "language",
+        "parent_key": "language_id",
+        "name": "fk_game_language_language",
+        "delete_rule": "CASCADE",
+        "orphans": 0
+      },
+      {
+        "child": "game_platform",
+        "child_key": "app_id",
+        "parent": "game",
+        "parent_key": "app_id",
+        "name": "fk_game_platform_game",
+        "delete_rule": "CASCADE",
+        "orphans": 0
+      },
+      {
+        "child": "game_platform",
+        "child_key": "platform_id",
+        "parent": "platform",
+        "parent_key": "platform_id",
+        "name": "fk_game_platform_platform",
+        "delete_rule": "CASCADE",
+        "orphans": 0
+      },
+      {
+        "child": "game_publisher",
+        "child_key": "app_id",
+        "parent": "game",
+        "parent_key": "app_id",
+        "name": "fk_game_publisher_game",
+        "delete_rule": "CASCADE",
+        "orphans": 0
+      },
+      {
+        "child": "game_publisher",
+        "child_key": "publisher_id",
+        "parent": "publisher",
+        "parent_key": "publisher_id",
+        "name": "fk_game_publisher_publisher",
+        "delete_rule": "CASCADE",
+        "orphans": 0
+      },
+      {
+        "child": "game_screenshot",
+        "child_key": "app_id",
+        "parent": "game",
+        "parent_key": "app_id",
+        "name": "fk_game_screenshot_game",
+        "delete_rule": "CASCADE",
+        "orphans": 0
+      },
+      {
+        "child": "game_tag",
+        "child_key": "app_id",
+        "parent": "game",
+        "parent_key": "app_id",
+        "name": "fk_game_tag_game",
+        "delete_rule": "CASCADE",
+        "orphans": 0
+      },
+      {
+        "child": "game_tag",
+        "child_key": "tag_id",
+        "parent": "tag",
+        "parent_key": "tag_id",
+        "name": "fk_game_tag_tag",
+        "delete_rule": "CASCADE",
+        "orphans": 0
+      },
+      {
+        "child": "review",
+        "child_key": "app_id",
+        "parent": "game",
+        "parent_key": "app_id",
+        "name": "fk_review_game",
+        "delete_rule": "CASCADE",
+        "orphans": 0
+      }
+    ]
+  },
+  "player": {
+    "width": 1170,
+    "height": 710,
+    "nodes": [
+      {
+        "name": "game",
+        "x": 20,
+        "y": 65,
+        "width": 280,
+        "height": 90,
+        "fields": [
+          "PK: app_id",
+          "name"
+        ],
+        "count": 141899
+      },
+      {
+        "name": "user",
+        "x": 860,
+        "y": 65,
+        "width": 280,
+        "height": 90,
+        "fields": [
+          "PK: user_id"
+        ],
+        "count": 3000
+      },
+      {
+        "name": "library",
+        "x": 430,
+        "y": 10,
+        "width": 280,
+        "height": 90,
+        "fields": [
+          "PK: user_id, app_id",
+          "FK: app_id, user_id",
+          "is_favorite, added_at"
+        ],
+        "count": 94644
+      },
+      {
+        "name": "wishlist",
+        "x": 430,
+        "y": 145,
+        "width": 280,
+        "height": 90,
+        "fields": [
+          "PK: user_id, app_id",
+          "FK: app_id, user_id"
+        ],
+        "count": 22463
+      },
+      {
+        "name": "purchase",
+        "x": 430,
+        "y": 280,
+        "width": 280,
+        "height": 90,
+        "fields": [
+          "PK: purchase_id",
+          "FK: app_id, user_id"
+        ],
+        "count": 94721
+      },
+      {
+        "name": "user_activity",
+        "x": 430,
+        "y": 415,
+        "width": 280,
+        "height": 90,
+        "fields": [
+          "PK: activity_id",
+          "FK: app_id, user_id"
+        ],
+        "count": 331211
+      },
+      {
+        "name": "achievement",
+        "x": 20,
+        "y": 450,
+        "width": 280,
+        "height": 90,
+        "fields": [
+          "PK: achievement_id",
+          "FK: app_id"
+        ],
+        "count": 509664
+      },
+      {
+        "name": "user_achievement",
+        "x": 430,
+        "y": 600,
+        "width": 280,
+        "height": 90,
+        "fields": [
+          "PK: user_id, achievement_id",
+          "FK: achievement_id, user_id"
+        ],
+        "count": 1023243
+      }
+    ],
+    "edges": [
+      {
+        "child": "achievement",
+        "child_key": "app_id",
+        "parent": "game",
+        "parent_key": "app_id",
+        "name": "fk_achievement_game",
+        "delete_rule": "CASCADE",
+        "orphans": 0
+      },
+      {
+        "child": "library",
+        "child_key": "app_id",
+        "parent": "game",
+        "parent_key": "app_id",
+        "name": "fk_library_game",
+        "delete_rule": "CASCADE",
+        "orphans": 0
+      },
+      {
+        "child": "library",
+        "child_key": "user_id",
+        "parent": "user",
+        "parent_key": "user_id",
+        "name": "fk_library_user",
+        "delete_rule": "CASCADE",
+        "orphans": 0
+      },
+      {
+        "child": "purchase",
+        "child_key": "app_id",
+        "parent": "game",
+        "parent_key": "app_id",
+        "name": "fk_purchase_game",
+        "delete_rule": "CASCADE",
+        "orphans": 0
+      },
+      {
+        "child": "purchase",
+        "child_key": "user_id",
+        "parent": "user",
+        "parent_key": "user_id",
+        "name": "fk_purchase_user",
+        "delete_rule": "CASCADE",
+        "orphans": 0
+      },
+      {
+        "child": "user_achievement",
+        "child_key": "achievement_id",
+        "parent": "achievement",
+        "parent_key": "achievement_id",
+        "name": "fk_user_achievement_achievement",
+        "delete_rule": "CASCADE",
+        "orphans": 0
+      },
+      {
+        "child": "user_achievement",
+        "child_key": "user_id",
+        "parent": "user",
+        "parent_key": "user_id",
+        "name": "fk_user_achievement_user",
+        "delete_rule": "CASCADE",
+        "orphans": 0
+      },
+      {
+        "child": "user_activity",
+        "child_key": "app_id",
+        "parent": "game",
+        "parent_key": "app_id",
+        "name": "fk_user_activity_game",
+        "delete_rule": "CASCADE",
+        "orphans": 0
+      },
+      {
+        "child": "user_activity",
+        "child_key": "user_id",
+        "parent": "user",
+        "parent_key": "user_id",
+        "name": "fk_user_activity_user",
+        "delete_rule": "CASCADE",
+        "orphans": 0
+      },
+      {
+        "child": "wishlist",
+        "child_key": "app_id",
+        "parent": "game",
+        "parent_key": "app_id",
+        "name": "fk_wishlist_game",
+        "delete_rule": "CASCADE",
+        "orphans": 0
+      },
+      {
+        "child": "wishlist",
+        "child_key": "user_id",
+        "parent": "user",
+        "parent_key": "user_id",
+        "name": "fk_wishlist_user",
+        "delete_rule": "CASCADE",
+        "orphans": 0
+      }
+    ]
+  }
+}

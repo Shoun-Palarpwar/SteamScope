@@ -1,0 +1,50 @@
+{
+  "source": "games.json",
+  "bytes": 949645832,
+  "counts": {
+    "records": 141900,
+    "invalid_ids": 0,
+    "missing_names": 1,
+    "duplicate_ids": 0,
+    "retained": 141899
+  },
+  "samples": [
+    {
+      "app_id": 730,
+      "name": "Counter-Strike 2",
+      "genres": [
+        "Action",
+        "Free To Play"
+      ],
+      "developers": [
+        "Valve"
+      ],
+      "release_date": "Aug 21, 2012",
+      "tags": [
+        "FPS",
+        "Shooter",
+        "Multiplayer",
+        "Competitive",
+        "Action"
+      ]
+    },
+    {
+      "app_id": 10,
+      "name": "Counter-Strike",
+      "genres": [
+        "Action"
+      ],
+      "developers": [
+        "Valve"
+      ],
+      "release_date": "Nov 1, 2000",
+      "tags": [
+        "Action",
+        "FPS",
+        "Multiplayer",
+        "Shooter",
+        "Classic"
+      ]
+    }
+  ]
+}

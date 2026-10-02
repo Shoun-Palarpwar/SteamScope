@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import './styles.css';
+import './identity.css';
+import Presentation from './presentation/Presentation.jsx';
 
 const paths = {
   compass: 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18Zm4 5-2.5 5.5L8 16l2.5-5.5L16 8Z',
@@ -56,11 +58,12 @@ const navigation = [
   ['discover', 'Discover', 'compass'], ['recommendations', 'For you', 'spark'],
   ['library', 'My library', 'library'], ['wishlist', 'Wishlist', 'bookmark'], ['favorites', 'Favorites', 'heart'],
   ['rankings', 'Rankings', 'trophy'], ['analytics', 'Analytics', 'chart'],
+  ['presentation', 'Behind SteamScope', 'library'],
 ];
-const titles = { discover: ['Find your next favorite.', 'A whole world of games. A little closer to your taste.'], recommendations: ['Made for your next obsession.', 'Recommendations shaped by your library and the games you love.'], library: ['Your games. Your world.', 'Every adventure you’ve added to your collection.'], wishlist: ['Something to look forward to.', 'Keep your next adventures close.'], favorites: ['The ones that stay with you.', 'Your favorite owned games help us find what comes next.'], rankings: ['See what’s making waves.', 'Explore recorded Steam popularity and our demo community.'], analytics: ['A different view of gaming.', 'Explore the numbers behind the Steam catalog.'] };
+const titles = { discover: ['Your next obsession\nstarts here.', 'Follow your curiosity. Find a game worth getting lost in.'], recommendations: ['Good taste.\nGreat discoveries.', 'Recommendations shaped by your library and the games you love.'], library: ['Your games. Your world.', 'Every adventure you’ve added to your collection.'], wishlist: ['The next chapter awaits.', 'Keep your next adventures close.'], favorites: ['Some games stay with you.', 'Your favorite owned games help us find what comes next.'], rankings: ['See what’s making waves.', 'Explore recorded Steam popularity and our demo community.'], analytics: ['Gaming, by the numbers.', 'Explore the numbers behind the Steam catalog.'] };
 
 function App() {
-  const [section, setSection] = useState('discover');
+  const [section, setSection] = useState(() => window.location.hash.startsWith('#presentation') ? 'presentation' : 'discover');
   const [user, setUser] = useState(() => { try { return Number(localStorage.getItem('steamscope-profile')) || 1; } catch { return 1; } });
   const [revision, setRevision] = useState(0);
   const [search, setSearch] = useState(''); const debounced = useDebounce(search);
@@ -70,14 +73,17 @@ function App() {
   const [pending, setPending] = useState(null); const mutationLock = useRef(false);
   const [profileOpen, setProfileOpen] = useState(false); const [profileSearch, setProfileSearch] = useState('');
   const [source, setSource] = useState('steam'); const [metric, setMetric] = useState('peak_ccu');
-  const summary = useData(`/users/${user}/summary`, revision);
-  const profiles = useData(`/users?limit=30&search=${encodeURIComponent(useDebounce(profileSearch))}`);
-  const genres = useData('/filters/genre?limit=100');
-  const catalog = useData('/games?limit=1');
-  const featured = useData(`/games?limit=1&user_id=${user}`, revision);
+  const presenting = section === 'presentation';
+  const profileQuery = useDebounce(profileSearch);
+  const summary = useData(presenting ? null : `/users/${user}/summary`, revision);
+  const profiles = useData(presenting ? null : `/users?limit=30&search=${encodeURIComponent(profileQuery)}`);
+  const genres = useData(presenting ? null : '/filters/genre?limit=100');
+  const catalog = useData(presenting ? null : '/games?limit=1');
+  const featured = useData(presenting ? null : `/games?limit=1&user_id=${user}`, revision);
   useEffect(() => { setPage(0); }, [debounced, genre, platform, sort]);
+  useEffect(() => { window.scrollTo({ top: 0, behavior: 'instant' }); }, [section]);
   useEffect(() => { if (toast) { const timer = setTimeout(() => setToast(null), 4200); return () => clearTimeout(timer); } }, [toast]);
-  const navigate = next => { setSection(next); setSearch(''); setGenre(''); setPlatform(''); setSort('positive_reviews'); setPage(0); };
+  const navigate = next => { if(next !== 'presentation' && location.hash.startsWith('#presentation')) history.replaceState(null,'',location.pathname+location.search); setSection(next); setSearch(''); setGenre(''); setPlatform(''); setSort('positive_reviews'); setPage(0); };
   const selectUser = id => { setUser(id); setProfileOpen(false); setDetail(null); setPage(0); try { localStorage.setItem('steamscope-profile', id); } catch {} };
   const personal = ['library', 'wishlist', 'favorites'].includes(section);
   const query = new URLSearchParams({ limit: 12, offset: page * 12, user_id: user });
@@ -107,18 +113,19 @@ function App() {
   const gameActions = { mutate, pending, open: setDetail };
   const countKey = { library: 'library_count', wishlist: 'wishlist_count', favorites: 'favorite_count' };
   const hero = featured.data?.results[0];
+  if (presenting) return <div className="presentation-page"><Presentation onExit={() => navigate('discover')}/></div>;
   return <div className="shell">
     <aside className="sidebar">
       <button className="brand" onClick={() => navigate('discover')} aria-label="SteamScope home"><span className="brand-icon"><Icon name="compass" size={25}/></span>Steam<span>Scope</span><i/></button>
-      <div className="sidebar-caption">YOUR NEXT ADVENTURE</div>
+      <div className="sidebar-caption">A FIELD GUIDE TO GOOD GAMES</div>
       <nav aria-label="Main navigation">{navigation.map(([key, label, icon], index) => <React.Fragment key={key}>{index === 2 && <div className="nav-label">YOUR SPACE</div>}{index === 5 && <div className="nav-label">THE BIG PICTURE</div>}<button className={`nav-item ${section === key ? 'active' : ''}`} onClick={() => navigate(key)} aria-current={section === key ? 'page' : undefined}><Icon name={icon}/><span>{label}</span>{countKey[key] && <small>{summary.data?.[countKey[key]] ?? '—'}</small>}{key === 'recommendations' && <span className="little-dot"/>}</button></React.Fragment>)}</nav>
       <div className="sidebar-bottom"><div className="catalog-status"><span className="little-dot"/> A universe worth exploring</div><p>{catalog.data ? catalog.data.total.toLocaleString() : '…'} games. Endless possibilities.</p><div className="demo-note"><Icon name="globe"/><span>Real catalog.<br/>Simulated community.</span></div></div>
     </aside>
     <div className="workspace">
       <header className="topbar"><div className="breadcrumb">Explore <span>/</span> <strong>{navigation.find(n => n[0] === section)[1]}</strong></div><div className="topbar-right"><span className="demo-pill">DEMO MODE</span><div className="profile-wrap"><button className="profile-button" aria-expanded={profileOpen} onClick={() => setProfileOpen(!profileOpen)}><span className="avatar">P{String(user).slice(-2)}</span><span><strong>{summary.data?.username || `Profile ${user}`}</strong><small>Switch demo profile</small></span><Icon name="chevron" size={15}/></button>{profileOpen && <div className="profile-popover"><label htmlFor="profile-search">Choose your demo profile</label><input id="profile-search" autoFocus placeholder="Search player name…" value={profileSearch} onChange={e => setProfileSearch(e.target.value)}/><div className="profile-options">{profiles.loading && <p>Finding profiles…</p>}{profiles.error && <p role="alert">{profiles.error}</p>}{profiles.data?.results.map(p => <button key={p.user_id} onClick={() => selectUser(p.user_id)}>{p.username}{p.user_id === user && <Icon name="check" size={16}/>}</button>)}{profiles.data?.total === 0 && <p>No matching profiles.</p>}</div><button className="text-button" onClick={() => setProfileOpen(false)}>Close picker</button></div>}</div></div></header>
-      <main><div className="page-heading"><div><div className="eyebrow"><span/> {section === 'discover' ? 'CURIOSITY LOOKS GOOD ON YOU' : 'YOUR STEAMSCOPE'}</div><h1>{titles[section][0]}</h1><p>{titles[section][1]}</p></div><span className="edition">PLAY. DISCOVER. REPEAT.</span></div>
+      <main className={`page-${section}`}><div className="page-heading"><div><div className="eyebrow"><span/> {section === 'discover' ? 'FOR THE LOVE OF THE GAME' : 'YOUR STEAMSCOPE'}</div><h1>{titles[section][0]}</h1><p>{titles[section][1]}</p></div><div className="edition"><span>LESS SCROLLING.</span><strong>MORE<br/>PLAYING.</strong><Icon name="arrow" size={32}/></div></div>
       {summary.error && <div className="inline-error">Profile unavailable. Choose another demo profile or <button onClick={refresh}>retry</button>.</div>}
-      {section === 'discover' && hero && <section className="hero" aria-label="Featured game"><Artwork src={hero.header_image_url} alt="" className="hero-art"/><div className="hero-shade"/><div className="hero-content"><span className="feature-badge"><Icon name="spark" size={14}/> IN THE SPOTLIGHT</span><h2>{hero.name}</h2><p>A community favorite. Your next great session could start here.</p><div className="hero-meta">{hero.genres.slice(0, 2).map(g => <span key={g}>{g}</span>)}<span>{number(hero.positive_reviews)} positive reviews</span></div><button className="primary" onClick={() => setDetail(hero.app_id)}>Explore game <Icon name="arrow" size={17}/></button></div><div className="hero-index"><span>01</span> / DISCOVER SOMETHING GREAT</div></section>}
+      {section === 'discover' && hero && <div className="discovery-feature"><section className="hero" aria-label="Featured game"><Artwork src={hero.header_image_url} alt="" className="hero-art"/><div className="hero-shade"/><div className="hero-content"><span className="feature-badge"><span className="feature-number">01</span> THE SPOTLIGHT</span><div className="hero-copy"><div className="hero-meta">{hero.genres.slice(0, 2).map(g => <span key={g}>{g}</span>)}</div><h2>{hero.name}</h2><p>One more round. You know the feeling.</p><button className="primary" onClick={() => setDetail(hero.app_id)}>Step inside <Icon name="arrow" size={19}/></button></div></div><div className="hero-index"><span>{number(hero.positive_reviews)}</span> POSITIVE REVIEWS</div></section><section className="taste-panel"><div className="taste-label"><Icon name="spark" size={18}/><span>BUILT AROUND YOU</span></div><div className="taste-orbit" aria-hidden="true"><i/><i/><i/><Icon name="spark" size={42}/></div><h2>Good games.<br/><em>Your kind.</em></h2><p>Your library is the starting point.<br/>Let your favorites lead the way.</p><div className="taste-stats"><div><strong>{summary.data?.library_count ?? '—'}</strong><span>IN YOUR LIBRARY</span></div><div><strong>{summary.data?.favorite_count ?? '—'}</strong><span>ALL-TIME FAVORITES</span></div></div><button onClick={() => navigate('recommendations')}>Find my next game <Icon name="arrow" size={19}/></button></section></div>}
       {section === 'recommendations' && <div className="context-banner"><Icon name="spark"/><div><strong>{list.data?.strategy === 'popular_fallback' ? 'Start with a community favorite' : 'A little more of what you love'}</strong><p>{list.data?.strategy === 'popular_fallback' ? 'Add games to your library and favorite the ones you love to shape your recommendations.' : 'Shared tags, genres, and developers guide these picks. Favorites have extra influence.'}</p></div></div>}
       {(section === 'discover' || personal) && <><div className="section-title"><h2>{personal ? navigation.find(n => n[0] === section)[1] : 'Explore the catalog'} <span>{list.data ? number(list.data.total) : '…'}</span></h2>{section === 'discover' && <span className="subtle">Find your kind of game</span>}</div><div className="filters"><label className="search-box"><Icon name="search"/><input aria-label="Search games" placeholder={personal ? 'Search your collection…' : 'Search games…'} value={search} onChange={e => setSearch(e.target.value)}/>{search && <button aria-label="Clear search" onClick={() => setSearch('')}><Icon name="close" size={15}/></button>}</label>{!personal && <><select aria-label="Genre" value={genre} onChange={e => setGenre(e.target.value)}><option value="">All genres</option>{genres.data?.results.map(g => <option key={g.id}>{g.name}</option>)}</select><select aria-label="Platform" value={platform} onChange={e => setPlatform(e.target.value)}><option value="">All platforms</option><option>Windows</option><option>Mac</option><option>Linux</option></select></>}<select aria-label="Sort games" value={sort} onChange={e => setSort(e.target.value)}><option value="positive_reviews">{personal ? 'Recently added' : 'Most popular'}</option><option value="name">Name: A–Z</option>{!personal && <><option value="release_date">Newest releases</option><option value="price">Price: low to high</option></>}</select></div></>}
       {section === 'rankings' && <div className="ranking-controls"><div className="segmented">{['steam', 'community'].map(s => <button key={s} className={source === s ? 'selected' : ''} onClick={() => { setSource(s); setMetric(s === 'steam' ? 'peak_ccu' : 'owners'); }}>{s === 'steam' ? 'Steam popularity' : 'Demo community'}</button>)}</div><select aria-label="Ranking metric" value={metric} onChange={e => setMetric(e.target.value)}>{(source === 'steam' ? [['peak_ccu', 'Recorded peak players'], ['positive_reviews', 'Positive reviews'], ['recommendation_count', 'Recommendations']] : [['owners', 'Most owned'], ['active_players', 'Active demo players'], ['play_minutes', 'Recorded play minutes']]).map(([v, label]) => <option value={v} key={v}>{label}</option>)}</select><p className="subtle">{source === 'steam' ? 'Stored catalog measurements · not live player counts' : 'Simulated activity · all recorded time'}</p></div>}

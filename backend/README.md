@@ -91,8 +91,8 @@ throwaway profile and cleans up after itself.
   Dates are inclusive in stored database time. Omitted bounds are unbounded.
   The response includes the available activity range. Metrics are simulated,
   and Steam metrics are stored snapshots; neither is a live player count.
-- Existing genre/platform/yearly analytics remain available; expanded analysis
-  questions and frontend visual design are still to be decided.
+- Existing genre/platform/yearly analytics are connected to the frontend;
+  expanded analysis questions and further visual refinement remain ahead.
 
 ## Frontend integration helpers (0.3.0)
 
@@ -135,13 +135,15 @@ From this directory, with database configuration exported in your environment:
 python3 -m unittest discover -s tests -v
 ```
 
-The six live integration tests cover the user journey, membership across screens
+The seven live integration tests cover the user journey, membership across screens
 and profile switches, collection sorting/filtering/pagination, summary counts,
 response schemas, recommendation scores checked against attribute intersections,
 favorite weighting, inclusive activity date boundaries, distinct-player counts,
-missing resources, and transaction rollback. They create and remove isolated
+missing resources, transaction rollback, and concurrent connection acquisition.
+They create and remove isolated
 profiles and activity fixtures; auto-increment identifiers may advance. Do not
 target a database where temporary test writes are unwanted.
 
-The frontend has not been built yet. `/docs` is the working interface for
-exploring and verifying this backend.
+The React frontend runs at http://127.0.0.1:5173 and proxies API requests to this
+backend. See [frontend setup](../frontend/README.md). `/docs` remains available
+for exploring and verifying endpoints directly.

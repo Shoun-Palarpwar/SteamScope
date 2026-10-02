@@ -1,0 +1,1109 @@
+{
+  "captured_at": "2026-10-02T11:57:12.132880+05:30",
+  "tables": [
+    {
+      "name": "achievement",
+      "count": 509664,
+      "columns": [
+        {
+          "name": "achievement_id",
+          "type": "bigint unsigned",
+          "nullable": "NO",
+          "key": "PRI"
+        },
+        {
+          "name": "app_id",
+          "type": "bigint unsigned",
+          "nullable": "NO",
+          "key": "MUL"
+        },
+        {
+          "name": "name",
+          "type": "varchar(255)",
+          "nullable": "NO",
+          "key": ""
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "nullable": "YES",
+          "key": ""
+        },
+        {
+          "name": "unlock_percentage",
+          "type": "decimal(10,2)",
+          "nullable": "YES",
+          "key": ""
+        }
+      ],
+      "ddl": "CREATE TABLE `achievement` (\n  `achievement_id` bigint unsigned NOT NULL AUTO_INCREMENT,\n  `app_id` bigint unsigned NOT NULL,\n  `name` varchar(255) NOT NULL,\n  `description` text,\n  `unlock_percentage` decimal(10,2) DEFAULT NULL,\n  PRIMARY KEY (`achievement_id`),\n  KEY `fk_achievement_game` (`app_id`),\n  CONSTRAINT `fk_achievement_game` FOREIGN KEY (`app_id`) REFERENCES `game` (`app_id`) ON DELETE CASCADE ON UPDATE CASCADE\n) ENGINE=InnoDB AUTO_INCREMENT=509665 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci"
+    },
+    {
+      "name": "category",
+      "count": 65,
+      "columns": [
+        {
+          "name": "category_id",
+          "type": "int unsigned",
+          "nullable": "NO",
+          "key": "PRI"
+        },
+        {
+          "name": "name",
+          "type": "varchar(150)",
+          "nullable": "NO",
+          "key": "UNI"
+        }
+      ],
+      "ddl": "CREATE TABLE `category` (\n  `category_id` int unsigned NOT NULL AUTO_INCREMENT,\n  `name` varchar(150) NOT NULL,\n  PRIMARY KEY (`category_id`),\n  UNIQUE KEY `name` (`name`)\n) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci"
+    },
+    {
+      "name": "developer",
+      "count": 87692,
+      "columns": [
+        {
+          "name": "developer_id",
+          "type": "int unsigned",
+          "nullable": "NO",
+          "key": "PRI"
+        },
+        {
+          "name": "name",
+          "type": "varchar(255)",
+          "nullable": "NO",
+          "key": "UNI"
+        }
+      ],
+      "ddl": "CREATE TABLE `developer` (\n  `developer_id` int unsigned NOT NULL AUTO_INCREMENT,\n  `name` varchar(255) NOT NULL,\n  PRIMARY KEY (`developer_id`),\n  UNIQUE KEY `name` (`name`)\n) ENGINE=InnoDB AUTO_INCREMENT=88547 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci"
+    },
+    {
+      "name": "game",
+      "count": 141899,
+      "columns": [
+        {
+          "name": "app_id",
+          "type": "bigint unsigned",
+          "nullable": "NO",
+          "key": "PRI"
+        },
+        {
+          "name": "name",
+          "type": "varchar(512)",
+          "nullable": "NO",
+          "key": ""
+        },
+        {
+          "name": "release_date",
+          "type": "date",
+          "nullable": "YES",
+          "key": ""
+        },
+        {
+          "name": "estimated_owners",
+          "type": "varchar(100)",
+          "nullable": "YES",
+          "key": ""
+        },
+        {
+          "name": "peak_ccu",
+          "type": "int unsigned",
+          "nullable": "YES",
+          "key": ""
+        },
+        {
+          "name": "required_age",
+          "type": "int unsigned",
+          "nullable": "YES",
+          "key": ""
+        },
+        {
+          "name": "price",
+          "type": "decimal(10,2)",
+          "nullable": "YES",
+          "key": ""
+        },
+        {
+          "name": "discount_dlc_count",
+          "type": "int unsigned",
+          "nullable": "YES",
+          "key": ""
+        },
+        {
+          "name": "description",
+          "type": "longtext",
+          "nullable": "YES",
+          "key": ""
+        },
+        {
+          "name": "header_image_url",
+          "type": "text",
+          "nullable": "YES",
+          "key": ""
+        },
+        {
+          "name": "website_url",
+          "type": "text",
+          "nullable": "YES",
+          "key": ""
+        },
+        {
+          "name": "support_url",
+          "type": "text",
+          "nullable": "YES",
+          "key": ""
+        },
+        {
+          "name": "support_email",
+          "type": "varchar(255)",
+          "nullable": "YES",
+          "key": ""
+        },
+        {
+          "name": "metacritic_score",
+          "type": "int unsigned",
+          "nullable": "YES",
+          "key": ""
+        },
+        {
+          "name": "metacritic_url",
+          "type": "text",
+          "nullable": "YES",
+          "key": ""
+        },
+        {
+          "name": "user_score",
+          "type": "decimal(5,2)",
+          "nullable": "YES",
+          "key": ""
+        },
+        {
+          "name": "positive_reviews",
+          "type": "int unsigned",
+          "nullable": "YES",
+          "key": ""
+        },
+        {
+          "name": "negative_reviews",
+          "type": "int unsigned",
+          "nullable": "YES",
+          "key": ""
+        },
+        {
+          "name": "score_rank",
+          "type": "int unsigned",
+          "nullable": "YES",
+          "key": ""
+        },
+        {
+          "name": "achievement_count",
+          "type": "int unsigned",
+          "nullable": "YES",
+          "key": ""
+        },
+        {
+          "name": "recommendation_count",
+          "type": "int unsigned",
+          "nullable": "YES",
+          "key": ""
+        },
+        {
+          "name": "notes",
+          "type": "longtext",
+          "nullable": "YES",
+          "key": ""
+        },
+        {
+          "name": "avg_playtime_forever",
+          "type": "int unsigned",
+          "nullable": "YES",
+          "key": ""
+        },
+        {
+          "name": "avg_playtime_2weeks",
+          "type": "int unsigned",
+          "nullable": "YES",
+          "key": ""
+        },
+        {
+          "name": "median_playtime_forever",
+          "type": "int unsigned",
+          "nullable": "YES",
+          "key": ""
+        },
+        {
+          "name": "median_playtime_2weeks",
+          "type": "int unsigned",
+          "nullable": "YES",
+          "key": ""
+        }
+      ],
+      "ddl": "CREATE TABLE `game` (\n  `app_id` bigint unsigned NOT NULL,\n  `name` varchar(512) NOT NULL,\n  `release_date` date DEFAULT NULL,\n  `estimated_owners` varchar(100) DEFAULT NULL,\n  `peak_ccu` int unsigned DEFAULT NULL,\n  `required_age` int unsigned DEFAULT NULL,\n  `price` decimal(10,2) DEFAULT NULL,\n  `discount_dlc_count` int unsigned DEFAULT NULL,\n  `description` longtext,\n  `header_image_url` text,\n  `website_url` text,\n  `support_url` text,\n  `support_email` varchar(255) DEFAULT NULL,\n  `metacritic_score` int unsigned DEFAULT NULL,\n  `metacritic_url` text,\n  `user_score` decimal(5,2) DEFAULT NULL,\n  `positive_reviews` int unsigned DEFAULT NULL,\n  `negative_reviews` int unsigned DEFAULT NULL,\n  `score_rank` int unsigned DEFAULT NULL,\n  `achievement_count` int unsigned DEFAULT NULL,\n  `recommendation_count` int unsigned DEFAULT NULL,\n  `notes` longtext,\n  `avg_playtime_forever` int unsigned DEFAULT NULL,\n  `avg_playtime_2weeks` int unsigned DEFAULT NULL,\n  `median_playtime_forever` int unsigned DEFAULT NULL,\n  `median_playtime_2weeks` int unsigned DEFAULT NULL,\n  PRIMARY KEY (`app_id`),\n  CONSTRAINT `chk_game_metacritic` CHECK (((`metacritic_score` is null) or (`metacritic_score` between 0 and 100))),\n  CONSTRAINT `chk_game_price` CHECK (((`price` is null) or (`price` >= 0))),\n  CONSTRAINT `chk_game_required_age` CHECK (((`required_age` is null) or (`required_age` >= 0))),\n  CONSTRAINT `chk_game_user_score` CHECK (((`user_score` is null) or (`user_score` >= 0)))\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci"
+    },
+    {
+      "name": "game_category",
+      "count": 632438,
+      "columns": [
+        {
+          "name": "app_id",
+          "type": "bigint unsigned",
+          "nullable": "NO",
+          "key": "PRI"
+        },
+        {
+          "name": "category_id",
+          "type": "int unsigned",
+          "nullable": "NO",
+          "key": "PRI"
+        }
+      ],
+      "ddl": "CREATE TABLE `game_category` (\n  `app_id` bigint unsigned NOT NULL,\n  `category_id` int unsigned NOT NULL,\n  PRIMARY KEY (`app_id`,`category_id`),\n  KEY `fk_game_category_category` (`category_id`),\n  CONSTRAINT `fk_game_category_category` FOREIGN KEY (`category_id`) REFERENCES `category` (`category_id`) ON DELETE CASCADE ON UPDATE CASCADE,\n  CONSTRAINT `fk_game_category_game` FOREIGN KEY (`app_id`) REFERENCES `game` (`app_id`) ON DELETE CASCADE ON UPDATE CASCADE\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci"
+    },
+    {
+      "name": "game_developer",
+      "count": 145841,
+      "columns": [
+        {
+          "name": "app_id",
+          "type": "bigint unsigned",
+          "nullable": "NO",
+          "key": "PRI"
+        },
+        {
+          "name": "developer_id",
+          "type": "int unsigned",
+          "nullable": "NO",
+          "key": "PRI"
+        }
+      ],
+      "ddl": "CREATE TABLE `game_developer` (\n  `app_id` bigint unsigned NOT NULL,\n  `developer_id` int unsigned NOT NULL,\n  PRIMARY KEY (`app_id`,`developer_id`),\n  KEY `fk_game_developer_developer` (`developer_id`),\n  CONSTRAINT `fk_game_developer_developer` FOREIGN KEY (`developer_id`) REFERENCES `developer` (`developer_id`) ON DELETE CASCADE ON UPDATE CASCADE,\n  CONSTRAINT `fk_game_developer_game` FOREIGN KEY (`app_id`) REFERENCES `game` (`app_id`) ON DELETE CASCADE ON UPDATE CASCADE\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci"
+    },
+    {
+      "name": "game_genre",
+      "count": 384871,
+      "columns": [
+        {
+          "name": "app_id",
+          "type": "bigint unsigned",
+          "nullable": "NO",
+          "key": "PRI"
+        },
+        {
+          "name": "genre_id",
+          "type": "int unsigned",
+          "nullable": "NO",
+          "key": "PRI"
+        }
+      ],
+      "ddl": "CREATE TABLE `game_genre` (\n  `app_id` bigint unsigned NOT NULL,\n  `genre_id` int unsigned NOT NULL,\n  PRIMARY KEY (`app_id`,`genre_id`),\n  KEY `fk_game_genre_genre` (`genre_id`),\n  CONSTRAINT `fk_game_genre_game` FOREIGN KEY (`app_id`) REFERENCES `game` (`app_id`) ON DELETE CASCADE ON UPDATE CASCADE,\n  CONSTRAINT `fk_game_genre_genre` FOREIGN KEY (`genre_id`) REFERENCES `genre` (`genre_id`) ON DELETE CASCADE ON UPDATE CASCADE\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci"
+    },
+    {
+      "name": "game_language",
+      "count": 1020830,
+      "columns": [
+        {
+          "name": "app_id",
+          "type": "bigint unsigned",
+          "nullable": "NO",
+          "key": "PRI"
+        },
+        {
+          "name": "language_id",
+          "type": "int unsigned",
+          "nullable": "NO",
+          "key": "PRI"
+        },
+        {
+          "name": "support_type",
+          "type": "enum('SUPPORTED','FULL_AUDIO')",
+          "nullable": "NO",
+          "key": "PRI"
+        }
+      ],
+      "ddl": "CREATE TABLE `game_language` (\n  `app_id` bigint unsigned NOT NULL,\n  `language_id` int unsigned NOT NULL,\n  `support_type` enum('SUPPORTED','FULL_AUDIO') NOT NULL,\n  PRIMARY KEY (`app_id`,`language_id`,`support_type`),\n  KEY `fk_game_language_language` (`language_id`),\n  CONSTRAINT `fk_game_language_game` FOREIGN KEY (`app_id`) REFERENCES `game` (`app_id`) ON DELETE CASCADE ON UPDATE CASCADE,\n  CONSTRAINT `fk_game_language_language` FOREIGN KEY (`language_id`) REFERENCES `language` (`language_id`) ON DELETE CASCADE ON UPDATE CASCADE\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci"
+    },
+    {
+      "name": "game_platform",
+      "count": 184107,
+      "columns": [
+        {
+          "name": "app_id",
+          "type": "bigint unsigned",
+          "nullable": "NO",
+          "key": "PRI"
+        },
+        {
+          "name": "platform_id",
+          "type": "int unsigned",
+          "nullable": "NO",
+          "key": "PRI"
+        }
+      ],
+      "ddl": "CREATE TABLE `game_platform` (\n  `app_id` bigint unsigned NOT NULL,\n  `platform_id` int unsigned NOT NULL,\n  PRIMARY KEY (`app_id`,`platform_id`),\n  KEY `fk_game_platform_platform` (`platform_id`),\n  CONSTRAINT `fk_game_platform_game` FOREIGN KEY (`app_id`) REFERENCES `game` (`app_id`) ON DELETE CASCADE ON UPDATE CASCADE,\n  CONSTRAINT `fk_game_platform_platform` FOREIGN KEY (`platform_id`) REFERENCES `platform` (`platform_id`) ON DELETE CASCADE ON UPDATE CASCADE\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci"
+    },
+    {
+      "name": "game_publisher",
+      "count": 138699,
+      "columns": [
+        {
+          "name": "app_id",
+          "type": "bigint unsigned",
+          "nullable": "NO",
+          "key": "PRI"
+        },
+        {
+          "name": "publisher_id",
+          "type": "int unsigned",
+          "nullable": "NO",
+          "key": "PRI"
+        }
+      ],
+      "ddl": "CREATE TABLE `game_publisher` (\n  `app_id` bigint unsigned NOT NULL,\n  `publisher_id` int unsigned NOT NULL,\n  PRIMARY KEY (`app_id`,`publisher_id`),\n  KEY `fk_game_publisher_publisher` (`publisher_id`),\n  CONSTRAINT `fk_game_publisher_game` FOREIGN KEY (`app_id`) REFERENCES `game` (`app_id`) ON DELETE CASCADE ON UPDATE CASCADE,\n  CONSTRAINT `fk_game_publisher_publisher` FOREIGN KEY (`publisher_id`) REFERENCES `publisher` (`publisher_id`) ON DELETE CASCADE ON UPDATE CASCADE\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci"
+    },
+    {
+      "name": "game_screenshot",
+      "count": 1178381,
+      "columns": [
+        {
+          "name": "screenshot_id",
+          "type": "bigint unsigned",
+          "nullable": "NO",
+          "key": "PRI"
+        },
+        {
+          "name": "app_id",
+          "type": "bigint unsigned",
+          "nullable": "NO",
+          "key": "MUL"
+        },
+        {
+          "name": "screenshot_url",
+          "type": "text",
+          "nullable": "NO",
+          "key": ""
+        }
+      ],
+      "ddl": "CREATE TABLE `game_screenshot` (\n  `screenshot_id` bigint unsigned NOT NULL AUTO_INCREMENT,\n  `app_id` bigint unsigned NOT NULL,\n  `screenshot_url` text NOT NULL,\n  PRIMARY KEY (`screenshot_id`),\n  KEY `fk_game_screenshot_game` (`app_id`),\n  CONSTRAINT `fk_game_screenshot_game` FOREIGN KEY (`app_id`) REFERENCES `game` (`app_id`) ON DELETE CASCADE ON UPDATE CASCADE\n) ENGINE=InnoDB AUTO_INCREMENT=1178382 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci"
+    },
+    {
+      "name": "game_tag",
+      "count": 1180542,
+      "columns": [
+        {
+          "name": "app_id",
+          "type": "bigint unsigned",
+          "nullable": "NO",
+          "key": "PRI"
+        },
+        {
+          "name": "tag_id",
+          "type": "int unsigned",
+          "nullable": "NO",
+          "key": "PRI"
+        }
+      ],
+      "ddl": "CREATE TABLE `game_tag` (\n  `app_id` bigint unsigned NOT NULL,\n  `tag_id` int unsigned NOT NULL,\n  PRIMARY KEY (`app_id`,`tag_id`),\n  KEY `fk_game_tag_tag` (`tag_id`),\n  CONSTRAINT `fk_game_tag_game` FOREIGN KEY (`app_id`) REFERENCES `game` (`app_id`) ON DELETE CASCADE ON UPDATE CASCADE,\n  CONSTRAINT `fk_game_tag_tag` FOREIGN KEY (`tag_id`) REFERENCES `tag` (`tag_id`) ON DELETE CASCADE ON UPDATE CASCADE\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci"
+    },
+    {
+      "name": "genre",
+      "count": 33,
+      "columns": [
+        {
+          "name": "genre_id",
+          "type": "int unsigned",
+          "nullable": "NO",
+          "key": "PRI"
+        },
+        {
+          "name": "name",
+          "type": "varchar(100)",
+          "nullable": "NO",
+          "key": "UNI"
+        }
+      ],
+      "ddl": "CREATE TABLE `genre` (\n  `genre_id` int unsigned NOT NULL AUTO_INCREMENT,\n  `name` varchar(100) NOT NULL,\n  PRIMARY KEY (`genre_id`),\n  UNIQUE KEY `name` (`name`)\n) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci"
+    },
+    {
+      "name": "language",
+      "count": 129,
+      "columns": [
+        {
+          "name": "language_id",
+          "type": "int unsigned",
+          "nullable": "NO",
+          "key": "PRI"
+        },
+        {
+          "name": "name",
+          "type": "varchar(255)",
+          "nullable": "NO",
+          "key": "UNI"
+        }
+      ],
+      "ddl": "CREATE TABLE `language` (\n  `language_id` int unsigned NOT NULL AUTO_INCREMENT,\n  `name` varchar(255) NOT NULL,\n  PRIMARY KEY (`language_id`),\n  UNIQUE KEY `name` (`name`)\n) ENGINE=InnoDB AUTO_INCREMENT=130 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci"
+    },
+    {
+      "name": "library",
+      "count": 94644,
+      "columns": [
+        {
+          "name": "user_id",
+          "type": "bigint unsigned",
+          "nullable": "NO",
+          "key": "PRI"
+        },
+        {
+          "name": "app_id",
+          "type": "bigint unsigned",
+          "nullable": "NO",
+          "key": "PRI"
+        },
+        {
+          "name": "added_at",
+          "type": "datetime",
+          "nullable": "NO",
+          "key": ""
+        },
+        {
+          "name": "is_favorite",
+          "type": "tinyint(1)",
+          "nullable": "NO",
+          "key": ""
+        }
+      ],
+      "ddl": "CREATE TABLE `library` (\n  `user_id` bigint unsigned NOT NULL,\n  `app_id` bigint unsigned NOT NULL,\n  `added_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  `is_favorite` tinyint(1) NOT NULL DEFAULT '0',\n  PRIMARY KEY (`user_id`,`app_id`),\n  KEY `fk_library_game` (`app_id`),\n  CONSTRAINT `fk_library_game` FOREIGN KEY (`app_id`) REFERENCES `game` (`app_id`) ON DELETE CASCADE ON UPDATE CASCADE,\n  CONSTRAINT `fk_library_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci"
+    },
+    {
+      "name": "platform",
+      "count": 3,
+      "columns": [
+        {
+          "name": "platform_id",
+          "type": "int unsigned",
+          "nullable": "NO",
+          "key": "PRI"
+        },
+        {
+          "name": "name",
+          "type": "varchar(50)",
+          "nullable": "NO",
+          "key": "UNI"
+        }
+      ],
+      "ddl": "CREATE TABLE `platform` (\n  `platform_id` int unsigned NOT NULL AUTO_INCREMENT,\n  `name` varchar(50) NOT NULL,\n  PRIMARY KEY (`platform_id`),\n  UNIQUE KEY `name` (`name`)\n) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci"
+    },
+    {
+      "name": "publisher",
+      "count": 73821,
+      "columns": [
+        {
+          "name": "publisher_id",
+          "type": "int unsigned",
+          "nullable": "NO",
+          "key": "PRI"
+        },
+        {
+          "name": "name",
+          "type": "varchar(255)",
+          "nullable": "NO",
+          "key": "UNI"
+        }
+      ],
+      "ddl": "CREATE TABLE `publisher` (\n  `publisher_id` int unsigned NOT NULL AUTO_INCREMENT,\n  `name` varchar(255) NOT NULL,\n  PRIMARY KEY (`publisher_id`),\n  UNIQUE KEY `name` (`name`)\n) ENGINE=InnoDB AUTO_INCREMENT=74514 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci"
+    },
+    {
+      "name": "purchase",
+      "count": 94721,
+      "columns": [
+        {
+          "name": "purchase_id",
+          "type": "bigint unsigned",
+          "nullable": "NO",
+          "key": "PRI"
+        },
+        {
+          "name": "user_id",
+          "type": "bigint unsigned",
+          "nullable": "NO",
+          "key": "MUL"
+        },
+        {
+          "name": "app_id",
+          "type": "bigint unsigned",
+          "nullable": "NO",
+          "key": "MUL"
+        },
+        {
+          "name": "purchase_date",
+          "type": "datetime",
+          "nullable": "NO",
+          "key": ""
+        },
+        {
+          "name": "price_paid",
+          "type": "decimal(10,2)",
+          "nullable": "NO",
+          "key": ""
+        },
+        {
+          "name": "payment_method",
+          "type": "varchar(50)",
+          "nullable": "YES",
+          "key": ""
+        },
+        {
+          "name": "transaction_status",
+          "type": "enum('COMPLETED','REFUNDED','CANCELLED')",
+          "nullable": "NO",
+          "key": ""
+        }
+      ],
+      "ddl": "CREATE TABLE `purchase` (\n  `purchase_id` bigint unsigned NOT NULL AUTO_INCREMENT,\n  `user_id` bigint unsigned NOT NULL,\n  `app_id` bigint unsigned NOT NULL,\n  `purchase_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  `price_paid` decimal(10,2) NOT NULL,\n  `payment_method` varchar(50) DEFAULT NULL,\n  `transaction_status` enum('COMPLETED','REFUNDED','CANCELLED') NOT NULL DEFAULT 'COMPLETED',\n  PRIMARY KEY (`purchase_id`),\n  KEY `fk_purchase_user` (`user_id`),\n  KEY `fk_purchase_game` (`app_id`),\n  CONSTRAINT `fk_purchase_game` FOREIGN KEY (`app_id`) REFERENCES `game` (`app_id`) ON DELETE CASCADE ON UPDATE CASCADE,\n  CONSTRAINT `fk_purchase_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE\n) ENGINE=InnoDB AUTO_INCREMENT=94722 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci"
+    },
+    {
+      "name": "review",
+      "count": 0,
+      "columns": [
+        {
+          "name": "review_id",
+          "type": "bigint unsigned",
+          "nullable": "NO",
+          "key": "PRI"
+        },
+        {
+          "name": "steamid",
+          "type": "bigint unsigned",
+          "nullable": "YES",
+          "key": ""
+        },
+        {
+          "name": "app_id",
+          "type": "bigint unsigned",
+          "nullable": "NO",
+          "key": "MUL"
+        },
+        {
+          "name": "voted_up",
+          "type": "tinyint(1)",
+          "nullable": "YES",
+          "key": ""
+        },
+        {
+          "name": "votes_up",
+          "type": "int unsigned",
+          "nullable": "YES",
+          "key": ""
+        },
+        {
+          "name": "votes_funny",
+          "type": "int unsigned",
+          "nullable": "YES",
+          "key": ""
+        },
+        {
+          "name": "weighted_vote_score",
+          "type": "decimal(10,8)",
+          "nullable": "YES",
+          "key": ""
+        },
+        {
+          "name": "playtime_forever",
+          "type": "int unsigned",
+          "nullable": "YES",
+          "key": ""
+        },
+        {
+          "name": "playtime_at_review",
+          "type": "int unsigned",
+          "nullable": "YES",
+          "key": ""
+        },
+        {
+          "name": "num_games_owned",
+          "type": "int unsigned",
+          "nullable": "YES",
+          "key": ""
+        },
+        {
+          "name": "num_reviews",
+          "type": "int unsigned",
+          "nullable": "YES",
+          "key": ""
+        },
+        {
+          "name": "review_text",
+          "type": "text",
+          "nullable": "YES",
+          "key": ""
+        },
+        {
+          "name": "created_at",
+          "type": "datetime",
+          "nullable": "YES",
+          "key": ""
+        },
+        {
+          "name": "updated_at",
+          "type": "datetime",
+          "nullable": "YES",
+          "key": ""
+        }
+      ],
+      "ddl": "CREATE TABLE `review` (\n  `review_id` bigint unsigned NOT NULL AUTO_INCREMENT,\n  `steamid` bigint unsigned DEFAULT NULL,\n  `app_id` bigint unsigned NOT NULL,\n  `voted_up` tinyint(1) DEFAULT NULL,\n  `votes_up` int unsigned DEFAULT NULL,\n  `votes_funny` int unsigned DEFAULT NULL,\n  `weighted_vote_score` decimal(10,8) DEFAULT NULL,\n  `playtime_forever` int unsigned DEFAULT NULL,\n  `playtime_at_review` int unsigned DEFAULT NULL,\n  `num_games_owned` int unsigned DEFAULT NULL,\n  `num_reviews` int unsigned DEFAULT NULL,\n  `review_text` text,\n  `created_at` datetime DEFAULT NULL,\n  `updated_at` datetime DEFAULT NULL,\n  PRIMARY KEY (`review_id`),\n  KEY `fk_review_game` (`app_id`),\n  CONSTRAINT `fk_review_game` FOREIGN KEY (`app_id`) REFERENCES `game` (`app_id`) ON DELETE CASCADE ON UPDATE CASCADE\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci"
+    },
+    {
+      "name": "tag",
+      "count": 452,
+      "columns": [
+        {
+          "name": "tag_id",
+          "type": "int unsigned",
+          "nullable": "NO",
+          "key": "PRI"
+        },
+        {
+          "name": "name",
+          "type": "varchar(150)",
+          "nullable": "NO",
+          "key": "UNI"
+        }
+      ],
+      "ddl": "CREATE TABLE `tag` (\n  `tag_id` int unsigned NOT NULL AUTO_INCREMENT,\n  `name` varchar(150) NOT NULL,\n  PRIMARY KEY (`tag_id`),\n  UNIQUE KEY `name` (`name`)\n) ENGINE=InnoDB AUTO_INCREMENT=453 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci"
+    },
+    {
+      "name": "user",
+      "count": 3000,
+      "columns": [
+        {
+          "name": "user_id",
+          "type": "bigint unsigned",
+          "nullable": "NO",
+          "key": "PRI"
+        },
+        {
+          "name": "username",
+          "type": "varchar(50)",
+          "nullable": "NO",
+          "key": "UNI"
+        },
+        {
+          "name": "email",
+          "type": "varchar(255)",
+          "nullable": "NO",
+          "key": "UNI"
+        },
+        {
+          "name": "password_hash",
+          "type": "varchar(255)",
+          "nullable": "NO",
+          "key": ""
+        },
+        {
+          "name": "created_at",
+          "type": "datetime",
+          "nullable": "NO",
+          "key": ""
+        }
+      ],
+      "ddl": "CREATE TABLE `user` (\n  `user_id` bigint unsigned NOT NULL AUTO_INCREMENT,\n  `username` varchar(50) NOT NULL,\n  `email` varchar(255) NOT NULL,\n  `password_hash` varchar(255) NOT NULL,\n  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  PRIMARY KEY (`user_id`),\n  UNIQUE KEY `uq_user_username` (`username`),\n  UNIQUE KEY `uq_user_email` (`email`)\n) ENGINE=InnoDB AUTO_INCREMENT=3025 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci"
+    },
+    {
+      "name": "user_achievement",
+      "count": 1023243,
+      "columns": [
+        {
+          "name": "user_id",
+          "type": "bigint unsigned",
+          "nullable": "NO",
+          "key": "PRI"
+        },
+        {
+          "name": "achievement_id",
+          "type": "bigint unsigned",
+          "nullable": "NO",
+          "key": "PRI"
+        },
+        {
+          "name": "unlocked_at",
+          "type": "datetime",
+          "nullable": "YES",
+          "key": ""
+        }
+      ],
+      "ddl": "CREATE TABLE `user_achievement` (\n  `user_id` bigint unsigned NOT NULL,\n  `achievement_id` bigint unsigned NOT NULL,\n  `unlocked_at` datetime DEFAULT NULL,\n  PRIMARY KEY (`user_id`,`achievement_id`),\n  KEY `fk_user_achievement_achievement` (`achievement_id`),\n  CONSTRAINT `fk_user_achievement_achievement` FOREIGN KEY (`achievement_id`) REFERENCES `achievement` (`achievement_id`) ON DELETE CASCADE ON UPDATE CASCADE,\n  CONSTRAINT `fk_user_achievement_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci"
+    },
+    {
+      "name": "user_activity",
+      "count": 331211,
+      "columns": [
+        {
+          "name": "activity_id",
+          "type": "bigint unsigned",
+          "nullable": "NO",
+          "key": "PRI"
+        },
+        {
+          "name": "user_id",
+          "type": "bigint unsigned",
+          "nullable": "NO",
+          "key": "MUL"
+        },
+        {
+          "name": "app_id",
+          "type": "bigint unsigned",
+          "nullable": "NO",
+          "key": "MUL"
+        },
+        {
+          "name": "activity_type",
+          "type": "enum('PLAY','LAUNCH','SESSION')",
+          "nullable": "NO",
+          "key": ""
+        },
+        {
+          "name": "activity_time",
+          "type": "datetime",
+          "nullable": "NO",
+          "key": ""
+        },
+        {
+          "name": "duration_minutes",
+          "type": "int unsigned",
+          "nullable": "YES",
+          "key": ""
+        }
+      ],
+      "ddl": "CREATE TABLE `user_activity` (\n  `activity_id` bigint unsigned NOT NULL AUTO_INCREMENT,\n  `user_id` bigint unsigned NOT NULL,\n  `app_id` bigint unsigned NOT NULL,\n  `activity_type` enum('PLAY','LAUNCH','SESSION') NOT NULL,\n  `activity_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  `duration_minutes` int unsigned DEFAULT NULL,\n  PRIMARY KEY (`activity_id`),\n  KEY `fk_user_activity_user` (`user_id`),\n  KEY `fk_user_activity_game` (`app_id`),\n  CONSTRAINT `fk_user_activity_game` FOREIGN KEY (`app_id`) REFERENCES `game` (`app_id`) ON DELETE CASCADE ON UPDATE CASCADE,\n  CONSTRAINT `fk_user_activity_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE\n) ENGINE=InnoDB AUTO_INCREMENT=331224 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci"
+    },
+    {
+      "name": "wishlist",
+      "count": 22463,
+      "columns": [
+        {
+          "name": "user_id",
+          "type": "bigint unsigned",
+          "nullable": "NO",
+          "key": "PRI"
+        },
+        {
+          "name": "app_id",
+          "type": "bigint unsigned",
+          "nullable": "NO",
+          "key": "PRI"
+        },
+        {
+          "name": "added_at",
+          "type": "datetime",
+          "nullable": "NO",
+          "key": ""
+        }
+      ],
+      "ddl": "CREATE TABLE `wishlist` (\n  `user_id` bigint unsigned NOT NULL,\n  `app_id` bigint unsigned NOT NULL,\n  `added_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  PRIMARY KEY (`user_id`,`app_id`),\n  KEY `fk_wishlist_game` (`app_id`),\n  CONSTRAINT `fk_wishlist_game` FOREIGN KEY (`app_id`) REFERENCES `game` (`app_id`) ON DELETE CASCADE ON UPDATE CASCADE,\n  CONSTRAINT `fk_wishlist_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci"
+    }
+  ],
+  "foreign_keys": [
+    {
+      "child": "achievement",
+      "child_key": "app_id",
+      "parent": "game",
+      "parent_key": "app_id",
+      "name": "fk_achievement_game",
+      "delete_rule": "CASCADE",
+      "orphans": 0
+    },
+    {
+      "child": "game_category",
+      "child_key": "category_id",
+      "parent": "category",
+      "parent_key": "category_id",
+      "name": "fk_game_category_category",
+      "delete_rule": "CASCADE",
+      "orphans": 0
+    },
+    {
+      "child": "game_category",
+      "child_key": "app_id",
+      "parent": "game",
+      "parent_key": "app_id",
+      "name": "fk_game_category_game",
+      "delete_rule": "CASCADE",
+      "orphans": 0
+    },
+    {
+      "child": "game_developer",
+      "child_key": "developer_id",
+      "parent": "developer",
+      "parent_key": "developer_id",
+      "name": "fk_game_developer_developer",
+      "delete_rule": "CASCADE",
+      "orphans": 0
+    },
+    {
+      "child": "game_developer",
+      "child_key": "app_id",
+      "parent": "game",
+      "parent_key": "app_id",
+      "name": "fk_game_developer_game",
+      "delete_rule": "CASCADE",
+      "orphans": 0
+    },
+    {
+      "child": "game_genre",
+      "child_key": "app_id",
+      "parent": "game",
+      "parent_key": "app_id",
+      "name": "fk_game_genre_game",
+      "delete_rule": "CASCADE",
+      "orphans": 0
+    },
+    {
+      "child": "game_genre",
+      "child_key": "genre_id",
+      "parent": "genre",
+      "parent_key": "genre_id",
+      "name": "fk_game_genre_genre",
+      "delete_rule": "CASCADE",
+      "orphans": 0
+    },
+    {
+      "child": "game_language",
+      "child_key": "app_id",
+      "parent": "game",
+      "parent_key": "app_id",
+      "name": "fk_game_language_game",
+      "delete_rule": "CASCADE",
+      "orphans": 0
+    },
+    {
+      "child": "game_language",
+      "child_key": "language_id",
+      "parent": "language",
+      "parent_key": "language_id",
+      "name": "fk_game_language_language",
+      "delete_rule": "CASCADE",
+      "orphans": 0
+    },
+    {
+      "child": "game_platform",
+      "child_key": "app_id",
+      "parent": "game",
+      "parent_key": "app_id",
+      "name": "fk_game_platform_game",
+      "delete_rule": "CASCADE",
+      "orphans": 0
+    },
+    {
+      "child": "game_platform",
+      "child_key": "platform_id",
+      "parent": "platform",
+      "parent_key": "platform_id",
+      "name": "fk_game_platform_platform",
+      "delete_rule": "CASCADE",
+      "orphans": 0
+    },
+    {
+      "child": "game_publisher",
+      "child_key": "app_id",
+      "parent": "game",
+      "parent_key": "app_id",
+      "name": "fk_game_publisher_game",
+      "delete_rule": "CASCADE",
+      "orphans": 0
+    },
+    {
+      "child": "game_publisher",
+      "child_key": "publisher_id",
+      "parent": "publisher",
+      "parent_key": "publisher_id",
+      "name": "fk_game_publisher_publisher",
+      "delete_rule": "CASCADE",
+      "orphans": 0
+    },
+    {
+      "child": "game_screenshot",
+      "child_key": "app_id",
+      "parent": "game",
+      "parent_key": "app_id",
+      "name": "fk_game_screenshot_game",
+      "delete_rule": "CASCADE",
+      "orphans": 0
+    },
+    {
+      "child": "game_tag",
+      "child_key": "app_id",
+      "parent": "game",
+      "parent_key": "app_id",
+      "name": "fk_game_tag_game",
+      "delete_rule": "CASCADE",
+      "orphans": 0
+    },
+    {
+      "child": "game_tag",
+      "child_key": "tag_id",
+      "parent": "tag",
+      "parent_key": "tag_id",
+      "name": "fk_game_tag_tag",
+      "delete_rule": "CASCADE",
+      "orphans": 0
+    },
+    {
+      "child": "library",
+      "child_key": "app_id",
+      "parent": "game",
+      "parent_key": "app_id",
+      "name": "fk_library_game",
+      "delete_rule": "CASCADE",
+      "orphans": 0
+    },
+    {
+      "child": "library",
+      "child_key": "user_id",
+      "parent": "user",
+      "parent_key": "user_id",
+      "name": "fk_library_user",
+      "delete_rule": "CASCADE",
+      "orphans": 0
+    },
+    {
+      "child": "purchase",
+      "child_key": "app_id",
+      "parent": "game",
+      "parent_key": "app_id",
+      "name": "fk_purchase_game",
+      "delete_rule": "CASCADE",
+      "orphans": 0
+    },
+    {
+      "child": "purchase",
+      "child_key": "user_id",
+      "parent": "user",
+      "parent_key": "user_id",
+      "name": "fk_purchase_user",
+      "delete_rule": "CASCADE",
+      "orphans": 0
+    },
+    {
+      "child": "review",
+      "child_key": "app_id",
+      "parent": "game",
+      "parent_key": "app_id",
+      "name": "fk_review_game",
+      "delete_rule": "CASCADE",
+      "orphans": 0
+    },
+    {
+      "child": "user_achievement",
+      "child_key": "achievement_id",
+      "parent": "achievement",
+      "parent_key": "achievement_id",
+      "name": "fk_user_achievement_achievement",
+      "delete_rule": "CASCADE",
+      "orphans": 0
+    },
+    {
+      "child": "user_achievement",
+      "child_key": "user_id",
+      "parent": "user",
+      "parent_key": "user_id",
+      "name": "fk_user_achievement_user",
+      "delete_rule": "CASCADE",
+      "orphans": 0
+    },
+    {
+      "child": "user_activity",
+      "child_key": "app_id",
+      "parent": "game",
+      "parent_key": "app_id",
+      "name": "fk_user_activity_game",
+      "delete_rule": "CASCADE",
+      "orphans": 0
+    },
+    {
+      "child": "user_activity",
+      "child_key": "user_id",
+      "parent": "user",
+      "parent_key": "user_id",
+      "name": "fk_user_activity_user",
+      "delete_rule": "CASCADE",
+      "orphans": 0
+    },
+    {
+      "child": "wishlist",
+      "child_key": "app_id",
+      "parent": "game",
+      "parent_key": "app_id",
+      "name": "fk_wishlist_game",
+      "delete_rule": "CASCADE",
+      "orphans": 0
+    },
+    {
+      "child": "wishlist",
+      "child_key": "user_id",
+      "parent": "user",
+      "parent_key": "user_id",
+      "name": "fk_wishlist_user",
+      "delete_rule": "CASCADE",
+      "orphans": 0
+    }
+  ],
+  "quality": {
+    "games": 141899,
+    "unique_ids": 141899,
+    "missing_names": "0",
+    "unknown_prices": "0",
+    "unknown_dates": "0"
+  },
+  "query_examples": [
+    {
+      "title": "Which games are most owned?",
+      "sql": "SELECT g.name, COUNT(*) AS owners\nFROM `library` l\nJOIN game g ON g.app_id = l.app_id\nGROUP BY g.app_id, g.name\nORDER BY owners DESC, g.app_id\nLIMIT 5;",
+      "rows": [
+        {
+          "name": "Trials Fusion\u2122",
+          "owners": 19
+        },
+        {
+          "name": "War Robots",
+          "owners": 18
+        },
+        {
+          "name": "Epiphyllum in Love",
+          "owners": 18
+        },
+        {
+          "name": "Post Void",
+          "owners": 18
+        },
+        {
+          "name": "Techtonica",
+          "owners": 18
+        }
+      ]
+    },
+    {
+      "title": "Which genres have the most games?",
+      "sql": "SELECT gr.name AS genre, COUNT(*) AS games\nFROM genre gr\nJOIN game_genre gg ON gg.genre_id = gr.genre_id\nGROUP BY gr.genre_id, gr.name\nORDER BY games DESC, gr.name\nLIMIT 5;",
+      "rows": [
+        {
+          "genre": "Indie",
+          "games": 94381
+        },
+        {
+          "genre": "Casual",
+          "games": 59627
+        },
+        {
+          "genre": "Action",
+          "games": 52653
+        },
+        {
+          "genre": "Adventure",
+          "games": 51397
+        },
+        {
+          "genre": "Simulation",
+          "games": 29133
+        }
+      ]
+    }
+  ]
+}
