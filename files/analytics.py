@@ -11,7 +11,6 @@ from fastapi import APIRouter, HTTPException, Query
 
 from db import get_cursor
 
-
 router = APIRouter()
 
 TOP_GAMES_METRICS = {
