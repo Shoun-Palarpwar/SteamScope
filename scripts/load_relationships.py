@@ -8,9 +8,8 @@ data/cleaned/relationships/*.csv into the game_* junction tables.
 
 Requires: game table already populated (FKs point at game.app_id).
 
-Idempotent: each table is skipped if it already has rows, so this
-is safe to re-run after a partial failure without creating
-duplicates or crashing on already-loaded tables.
+Tables with existing rows are skipped. This does not repair an incomplete
+import: verify counts after failures and restore/rebuild a fresh database.
 """
 
 import csv
@@ -19,16 +18,13 @@ from pathlib import Path
 
 import mysql.connector
 
+from project_config import database_config
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 MASTER_DIR = BASE_DIR / "data" / "cleaned" / "master"
 REL_DIR = BASE_DIR / "data" / "cleaned" / "relationships"
 
-DB_CONFIG = {
-    "host": "localhost",
-    "user": "root",
-    "password": "",
-    "database": "steamscope",
-}
+DB_CONFIG = database_config()
 
 BATCH_SIZE = 2000
 

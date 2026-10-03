@@ -62,7 +62,7 @@ Steam metrics are stored snapshots, not live measurements. Community activity is
 | Application server | Uvicorn | Runs the FastAPI application |
 | Database | MySQL with InnoDB | Relational storage, referential integrity, joins, aggregation, and transactions |
 | Database access | MySQL Connector/Python | Executes parameterized SQL through a shared connection pool |
-| Data preparation | Python, pandas, standard-library JSON/CSV tools | Source profiling, cleaning, transformation, and relationship extraction |
+| Data preparation | Python, ijson, pandas, standard-library CSV tools | Source profiling, cleaning, transformation, and relationship extraction |
 | Testing | Python `unittest`, FastAPI TestClient, HTTPX | Live API/database integration checks |
 | Database inspection | MySQL Workbench / MySQL CLI | Schema inspection, queries, and migration application |
 | Version control | Git | Tracks code and documentation changes |
@@ -100,7 +100,7 @@ The original games CSV contained serious structural corruption and shifted field
 | Favorites and later collection changes | Stored actions performed on the selected demo profile |
 | Real review author identifiers | External Steam identifiers; not the simulated profile IDs |
 
-The imported catalog can include software and other Steam application types as well as games. Recorded prices, scores, and dates may be missing or stale. A zero recorded price is not a guarantee that an application is currently free on Steam. Source download attribution and a reproducible database bootstrap still need to be packaged for a fresh-clone handoff.
+The imported catalog can include software and other Steam application types as well as games. Recorded prices, scores, and dates may be missing or stale. A zero recorded price is not a guarantee that an application is currently free on Steam. Source download attribution remains to be documented. The ordered import steps and current schema are now packaged in [database/README.md](database/README.md); a full fresh import still needs verification.
 
 ### Table groups
 
@@ -115,7 +115,7 @@ The imported catalog can include software and other Steam application types as w
 
 Reference tables prevent repeated attribute strings across game records. Junction tables resolve many-to-many relationships, and composite keys prevent duplicate memberships. Foreign keys enforce valid references. The completed data cleanup reported zero orphaned rows; that is a result for the imported dataset, not an ongoing audit performed by this README.
 
-Favorites are stored as `library.is_favorite`; its migration is in [database/migrations](database/migrations). The early [relational schema document](docs/Relational_Schema/SteamScope_Relational_Schema.md) is design history and contains differences from the implemented schema. Inspect the current database for exact column definitions.
+Favorites are stored as `library.is_favorite`; its migration is in [database/migrations](database/migrations). The early [relational schema document](docs/Relational_Schema/SteamScope_Relational_Schema.md) is design history and contains differences from the implemented schema. The current [schema.sql](database/schema.sql) preserves the saved database definitions, including favorites.
 
 ## How recommendations work
 
@@ -141,7 +141,7 @@ Owned games are excluded from personal suggestions; the source game is excluded 
 
 ### 1. Prepare the database
 
-You need a running MySQL server with the existing `steamscope` schema and data. **A fresh clone does not yet create or populate this database automatically.** Large datasets are excluded from Git, and some JSON recovery / initial-schema artifacts still live outside this repository in the original working folder. The scripts directory includes earlier experiments and loaders; it is not yet a single ordered bootstrap pipeline.
+For the existing local installation, keep using the populated `steamscope` database. For a new installation, follow [database setup](database/README.md): create the empty schema, prepare the JSON source, load games and relationships, and generate demo profiles. All required code and SQL now live inside this repository. Large datasets remain local and ignored by Git pending a large-file storage decision; see [data/README.md](data/README.md).
 
 For an existing database without `library.is_favorite`, select `steamscope` in Workbench and run `database/migrations/001_library_favorites.sql` once. This migration has already been applied to the current development database.
 
@@ -251,28 +251,25 @@ Browser checks verified catalog rendering, game details, the recommendations ent
 ## Repository map
 
 ```text
-SteamScope-main/
-├── backend/
-│   ├── app/
-│   │   ├── main.py                 # API setup, lifecycle, health checks
-│   │   ├── db.py                   # Pooling and transaction boundaries
-│   │   ├── schemas.py              # Shared response contracts
-│   │   ├── cards.py                # Batched card and membership data
-│   │   ├── collection_queries.py   # Collection search, sorting, pagination
-│   │   └── routers/                # Catalog, profiles, edits, discovery, analytics
-│   ├── tests/                     # Live integration tests
-│   ├── .env.example
-│   └── requirements.txt
-├── frontend/
-│   ├── src/main.jsx                # Screens, components, API interactions
-│   ├── src/styles.css              # Responsive visual design
-│   ├── src/identity.css            # Editorial theme and responsive refinements
-│   ├── vite.config.js              # Local frontend/API proxy
-│   └── package-lock.json
-├── database/migrations/            # Incremental schema changes
-├── scripts/                        # Profiling, cleaning, loading, simulation
-├── data/                           # Local datasets; large raw/cleaned files ignored
-└── docs/                           # Design history, data notes, backend plan
+SteamScope/
+└── SteamScope-main/                 # Git repository: all project files live here
+    ├── README.md
+    ├── backend/                    # FastAPI app, routes, contracts, tests
+    ├── frontend/                   # React app and interactive presentation
+    ├── database/
+    │   ├── schema.sql              # Current 24-table schema for a fresh database
+    │   ├── migrations/             # Changes for older database installations
+    │   └── checks/                 # Read-only schema/data diagnostics
+    ├── scripts/                    # JSON pipeline, loaders, profiling, presentation
+    ├── data/
+    │   ├── raw/                    # Original JSON and historical CSV (local)
+    │   ├── cleaned/                # Game, reference and relationship CSVs (local)
+    │   ├── sample/                 # Small samples committed to Git
+    │   └── manifest.json           # Dataset sizes and checksums
+    ├── docs/                       # Data dictionary, ER diagrams, schema documents
+    ├── output/pdf/                 # Printable presentation output
+    └── extra files/                # Earlier scripts, prototype, SQL and planning
+        └── archives/               # Original ZIP (local, ignored)
 ```
 
 ## Current boundaries and next steps
@@ -282,7 +279,9 @@ SteamScope-main/
 - **Recommendation quality:** scoring is an explainable baseline; relevance, diversity, and broader performance testing can be improved.
 - **Frontend:** the first functional design is implemented; further interaction, mobile, and accessibility refinement remains.
 - **Analytics:** the current charts are a baseline; deeper analysis questions are still being selected.
-- **Reproducibility:** package the final base schema, JSON recovery pipeline, source attribution, and database setup before distributing a fresh-clone demo.
+- **Reproducibility:** the schema, JSON pipeline, dependencies, and ordered setup are now in the repository. Verify a full fresh import and document source attribution before distributing a fresh-clone demo.
+- **GitHub storage:** code, schema, documentation, samples, and evidence are ready for normal commits. Raw/cleaned datasets and local backups remain ignored until a large-file storage approach is selected.
+- **Presentation:** interactive chapters and evidence are implemented; PDF generation and final visual review remain unfinished.
 - **Deployment:** production credentials, authentication, hosting, monitoring, and automated browser tests are future work.
 
 SteamScope is an independent academic/portfolio project and is not affiliated with Valve or Steam. Game artwork and source metadata remain associated with their respective owners.

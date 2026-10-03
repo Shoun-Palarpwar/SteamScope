@@ -2,10 +2,14 @@
 __pycache__/
 *.pyc
 .venv/
+.pytest_cache/
 
 # Large datasets
 data/raw/
 data/cleaned/
+# Local archives and disposable rendering output
+/extra files/archives/
+tmp/
 
 # Environment / secrets
 .env
@@ -18,3 +22,4 @@ dist/
 # IDE
 .vscode/
 .idea/
+.DS_Store

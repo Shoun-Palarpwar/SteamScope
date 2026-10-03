@@ -1,0 +1,7 @@
+# Data import and saved evidence
+ijson>=3.2,<4
+mysql-connector-python>=8.0,<10
+# Historical source profiling
+pandas>=2.0,<3
+# Printable presentation
+reportlab>=4.0,<5

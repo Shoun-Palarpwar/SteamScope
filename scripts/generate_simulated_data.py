@@ -11,8 +11,8 @@ project's own design: "steamid in review is NOT a FK to user"
 precisely because reviews are real public data and this user
 layer is not).
 
-Idempotent per table: skips any table that already has rows, so
-it's safe to re-run after a partial failure.
+Populated tables are skipped. A partially populated database is not repaired
+by rerunning this generator; use a fresh database for a complete rebuild.
 
 Requires: mysql-connector-python (already used by load_games.py)
 """
@@ -23,12 +23,9 @@ from datetime import datetime, timedelta
 
 import mysql.connector
 
-DB_CONFIG = {
-    "host": "localhost",
-    "user": "root",
-    "password": "",
-    "database": "steamscope",
-}
+from project_config import database_config
+
+DB_CONFIG = database_config()
 
 N_USERS = 3000
 LIBRARY_RANGE = (3, 60)

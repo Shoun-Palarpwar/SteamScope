@@ -6,6 +6,7 @@ from datetime import datetime
 from pathlib import Path
 from xml.sax.saxutils import escape
 
+import reportlab
 from reportlab.lib import colors
 from reportlab.lib.styles import ParagraphStyle
 from reportlab.pdfbase import pdfmetrics
@@ -21,9 +22,9 @@ evidence = json.loads((DATA / 'evidence.json').read_text())
 source = json.loads((DATA / 'source-audit.json').read_text())
 graphs = json.loads((DATA / 'diagrams.json').read_text())
 tables = {t['name']: t for t in evidence['tables']}
-FONT_DIR = Path('/Users/shounpalarpwar/.cache/codex-runtimes/codex-primary-runtime/dependencies/native/libreoffice-headless/libreoffice/LibreOfficeDev.app/Contents/Resources/fonts/truetype')
-pdfmetrics.registerFont(TTFont('Body', str(FONT_DIR / 'DejaVuSans.ttf')))
-pdfmetrics.registerFont(TTFont('Strong', str(FONT_DIR / 'DejaVuSans-Bold.ttf')))
+FONT_DIR = Path(reportlab.__file__).resolve().parent / 'fonts'
+pdfmetrics.registerFont(TTFont('Body', str(FONT_DIR / 'Vera.ttf')))
+pdfmetrics.registerFont(TTFont('Strong', str(FONT_DIR / 'VeraBd.ttf')))
 W, H = 1440, 1000
 BG, PANEL, BORDER = '#17111f', '#291d35', '#614375'
 TEXT, MUTED, LIME, LAVENDER = '#f5edfa', '#cbb8d8', '#d2fc75', '#c1a2df'
@@ -229,15 +230,15 @@ for slide in deck['slides']:
         para('THE DATABASE IS THE STORY.',85,304,1250,12,'#4f3166',True)
         para('Clean it.\nConnect it.\nBuild on it.',85,345,1200,45,'#2b173b',True,max_h=205)
     elif kind=='evidence':
-        rows=[{'evidence':'Source recovery','where':'../clean_games_json.py; ../extract_relationships_json.py'},
-              {'evidence':'Loading','where':'scripts/load_games.py; ../load_relationships.py'},
+        rows=[{'evidence':'Source recovery','where':'scripts/clean_games_json.py; scripts/extract_relationships_json.py'},
+              {'evidence':'Loading','where':'scripts/load_games.py; scripts/load_relationships.py'},
               {'evidence':'Source audit','where':'scripts/presentation_source_audit.py'},
               {'evidence':'Schema / counts / FK checks','where':'scripts/presentation_snapshot.py'},
               {'evidence':'Queries / transactions','where':'backend/app/routers/ and backend/app/db.py'},
               {'evidence':'Saved evidence for both versions','where':'frontend/src/presentation/*.json'}]
         # Equal-width columns here allow longer paths to wrap.
         table(rows,52,270,1336,row_h=49,size=12)
-        para('Paths beginning ../ refer to the original parent working folder. Original dataset download attribution remains a follow-up. No profile records are exported.',52,595,1300,12,MUTED,max_h=48)
+        para('All evidence paths are relative to the repository root. Original dataset download attribution remains a follow-up. No profile records are exported.',52,595,1300,12,MUTED,max_h=48)
     points(slide);takeaway(slide['takeaway']);footer(slide)
 
 # A readable reference for every column, separate from the plain-language slides.

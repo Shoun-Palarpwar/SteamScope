@@ -1,0 +1,19 @@
+Historical scratch SQL captured before deletion. This is an excerpt, not a
+verified complete recovery. Stored as text because the original included
+destructive DELETE statements. Do not run this against the current database.
+
+USE steamscope;
+SELECT COUNT(*) AS total_games FROM game;
+SELECT COUNT(*) AS total_reviews FROM review;
+SELECT COUNT(*) AS total_users FROM user;
+SELECT COUNT(*) AS total_developers FROM developer;
+SELECT COUNT(*) AS total_publishers FROM publisher;
+SELECT COUNT(*) AS total_genres FROM genre;
+SELECT COUNT(*) AS total_tags FROM tag;
+USE steamscope;
+DELETE FROM developer;
+DELETE FROM publisher;
+DELETE FROM genre;
+DELETE FROM tag;
+DELETE FROM category;
+DELETE FROM platform;

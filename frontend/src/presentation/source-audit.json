@@ -1,5 +1,5 @@
 {
-  "source": "games.json",
+  "source": "data/raw/games.json",
   "bytes": 949645832,
   "counts": {
     "records": 141900,

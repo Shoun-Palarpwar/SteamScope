@@ -1,20 +1,18 @@
 """Read-only database evidence for the presentation; never exports profile rows."""
 import json
-import os
 from datetime import datetime
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
 import mysql.connector
+from project_config import database_config
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'frontend/src/presentation/evidence.json'
 
 
 def main():
-    conn = mysql.connector.connect(host=os.getenv('DB_HOST', '127.0.0.1'),
-        user=os.getenv('DB_USER', 'root'), password=os.getenv('DB_PASSWORD', ''),
-        database=os.getenv('DB_NAME', 'steamscope'))
+    conn = mysql.connector.connect(**database_config())
     cur = conn.cursor(dictionary=True)
     cur.execute('SET TRANSACTION READ ONLY')
     cur.execute('START TRANSACTION WITH CONSISTENT SNAPSHOT')

@@ -1,0 +1,104 @@
+{
+  "files": [
+    {
+      "path": "data/cleaned/games_cleaned.csv",
+      "bytes": 223732041,
+      "sha256": "45039cec8a9028f4a0e983fc93862715db4604aed65d6b3777f9b26bb58030d1"
+    },
+    {
+      "path": "data/cleaned/master/category.csv",
+      "bytes": 1276,
+      "sha256": "fdb5bfdd2c71fcd58c53e7bdccbd4309766a8c74d4b5c36e0df19f4dceee818d"
+    },
+    {
+      "path": "data/cleaned/master/developer.csv",
+      "bytes": 1359531,
+      "sha256": "75546d36e6573f879ce0910d5daa37b093c8bc83e3c648bacd3c8a8263b3d4b5"
+    },
+    {
+      "path": "data/cleaned/master/genre.csv",
+      "bytes": 414,
+      "sha256": "3a0d2358d79c7fd427c4bc4f684c29ec861951cd475b216cb05b118cf137a09f"
+    },
+    {
+      "path": "data/cleaned/master/language.csv",
+      "bytes": 2304,
+      "sha256": "c3b44bd7c53418efeb41e80d196f5e7549c54179e1681a6bcc0f5615de119a49"
+    },
+    {
+      "path": "data/cleaned/master/platform.csv",
+      "bytes": 27,
+      "sha256": "5f2927962a7e4c181b11cc9f242e43f414705b4799627bf8bf5975a5b3b6f508"
+    },
+    {
+      "path": "data/cleaned/master/publisher.csv",
+      "bytes": 1157294,
+      "sha256": "44ff4286f91be2a51ddda8b3ef1492cc718e9ef9c53198ed1207a9e2d9342d0d"
+    },
+    {
+      "path": "data/cleaned/master/tag.csv",
+      "bytes": 5382,
+      "sha256": "e8f81584574c04f7862e5713c6c6d0da8870e641519bd595c3d94177a870d6ba"
+    },
+    {
+      "path": "data/cleaned/relationships/game_category.csv",
+      "bytes": 15991155,
+      "sha256": "2deb02c7d7891cc0b1bd718e2ee9482015f3906fad2d8db6fc8540b515cae82f"
+    },
+    {
+      "path": "data/cleaned/relationships/game_developer.csv",
+      "bytes": 3369698,
+      "sha256": "174ceeca22dc98ad9a33e0fffe77a29eb2d7ebb874a544cab1e4780546df8431"
+    },
+    {
+      "path": "data/cleaned/relationships/game_genre.csv",
+      "bytes": 6482128,
+      "sha256": "feb1cd840bf8882254b865877d79af8b85ce523683bf8472d986e2c96728f010"
+    },
+    {
+      "path": "data/cleaned/relationships/game_language.csv",
+      "bytes": 29650654,
+      "sha256": "88b8de7fb249569193884122310d0fad82c137c1fa7a07173a36e7d42e10bc4e"
+    },
+    {
+      "path": "data/cleaned/relationships/game_platform.csv",
+      "bytes": 2953043,
+      "sha256": "a91a8a58cc827965599a361533694102892574b1c0b3cd41957520c5a615d4f3"
+    },
+    {
+      "path": "data/cleaned/relationships/game_publisher.csv",
+      "bytes": 3226642,
+      "sha256": "258a801d338e69a4121302762929041cd3624defabbd74796c7a29311fa0fba5"
+    },
+    {
+      "path": "data/cleaned/relationships/game_screenshot.csv",
+      "bytes": 194187283,
+      "sha256": "350cac781b14541dc78112b5c46c97859f57e988b8a5fc11aee6ab6c7c60d8e2"
+    },
+    {
+      "path": "data/cleaned/relationships/game_tag.csv",
+      "bytes": 22182531,
+      "sha256": "6286e00af2963a0695d89e6e69fa683f292309817f3dc825ced9a3c3655ba7b0"
+    },
+    {
+      "path": "data/raw/games.csv",
+      "bytes": 401140503,
+      "sha256": "1b48008b01a799d82385d6e66ba0cb65dd477b6aa4b6c2ec8c443025ab6880ad"
+    },
+    {
+      "path": "data/raw/games.json",
+      "bytes": 949645832,
+      "sha256": "cf1522284f45225a4bb63e289fa1b21ef4358fda91a25753a3b9c1d37cd8bf09"
+    },
+    {
+      "path": "data/sample/games_dataset_first200.xlsx",
+      "bytes": 264782,
+      "sha256": "a8487f1f640e8d01782fcfcc88d05802e79ae018e7359f4a2d22ba5bc9957909"
+    },
+    {
+      "path": "data/sample/games_reviews_first30.xlsx",
+      "bytes": 15502,
+      "sha256": "9125d3bdb43cc263c39be93a18ec9fd8331ebf1a0a911aa1c672c53855b05358"
+    }
+  ]
+}

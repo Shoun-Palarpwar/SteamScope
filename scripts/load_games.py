@@ -4,6 +4,8 @@ from pathlib import Path
 
 import mysql.connector
 
+from project_config import database_config
+
 
 # ============================================================
 # STEAMSCOPE - GAME CATALOG ETL
@@ -12,12 +14,7 @@ import mysql.connector
 BASE_DIR = Path(__file__).resolve().parent.parent
 CSV_FILE = BASE_DIR / "data" / "cleaned" / "games_cleaned.csv"
 
-DB_CONFIG = {
-    "host": "localhost",
-    "user": "root",
-    "password": "",
-    "database": "steamscope",
-}
+DB_CONFIG = database_config()
 
 BATCH_SIZE = 2000
 
